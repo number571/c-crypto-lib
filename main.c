@@ -1,8 +1,3 @@
-# CCryptoLIB
-  
-#### Example use:
-  
-```c
 #include <stdio.h>
 
 #include "crypto/trithemius.h"
@@ -25,19 +20,3 @@ int main (void) {
 
     return 0;
 }
-```
-  
-  
-#### Example compile:
-  
-```
-$ gcc main.c crypto/trithemius.c -o main
-$ ./main
-```
-  
-#### Result:
-  
-```
-IHQSX, LFKGA
-HELLO, WORLD
-```
