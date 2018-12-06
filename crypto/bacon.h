@@ -6,7 +6,6 @@ extern void to_string_bacon (char * to, const char * from);
 extern void to_bytes_bacon  (char * to, const char * from);
 extern void print_bacon     (const char * from);
 extern void println_bacon   (const char * from);
-
 extern char bacon (
 	char * const to, 
 	const char mode, 
