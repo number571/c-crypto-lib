@@ -2,7 +2,7 @@
 
 extern char set_alpha_vigenere (const char * const alpha);
 extern char vigenere (
-	char * const to,
+	char * to,
 	const char mode,
 	const char * const key,
 	char * const from
