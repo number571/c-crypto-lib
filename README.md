@@ -1,43 +1,39 @@
 # CCryptoLIB
   
-#### Example use:
+#### Example:
   
 ```c
 #include <stdio.h>
 
+#include "crypto/append/macro.h"
 #include "crypto/trithemius.h"
-#include "crypto/macro.h"
 
-char key (const char ch) {
-    return ch * 2 + 1;
+char func_key(const char x) {
+	return x * 2 + 1;
 }
 
-int main (void) {
-    char message[] = "HELLO, WORLD";
+int main(void) {
+	char message[100] = "HELLO, WORLD";
 
-    // ENCRYPTION: IHQSX, LFKGA
-    trithemius(message, ENCRYPT_MODE, key, message);
-    printf("%s\n", message);
+	set_alpha_trithemius("ABCDEFGHIJKLMNOPQRSTUVWXYZ ,");
 
-    // DECRYPTION: HELLO, WORLD
-    trithemius(message, DECRYPT_MODE, key, message);
-    printf("%s\n", message);
+	trithemius(message, ENCRYPT_MODE, func_key, message);
+	printf("%s\n", message);
 
-    return 0;
+	trithemius(message, DECRYPT_MODE, func_key, message);
+	printf("%s\n", message);
+
+	return 0;
 }
 ```
   
   
-#### Example compile:
+#### Compile and Run:
   
 ```
-$ gcc main.c crypto/trithemius.c -o main
+$ gcc main.c crypto/cipher/trithemius.c -o main
 $ ./main
-```
-  
-#### Result:
-  
-```
-IHQSX, LFKGA
+
+IHQSXKLJDIE 
 HELLO, WORLD
 ```
