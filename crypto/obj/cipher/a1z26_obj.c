@@ -67,14 +67,14 @@ static char _decrypt_a1z26 (void) {
 }
 
 A1Z26 a1z26_obj = {
-	.encrypted 	  = false,
+	.encrypted    = false,
 	.free_memsize = _free_memsize_a1z26,
 	.set_message  = _set_message_a1z26,
 	.set_memsize  = _set_memsize_a1z26,
-	.to_string 	  = _to_string_a1z26,
-	.to_bytes  	  = _to_bytes_a1z26,
-	.print 	   	  = _print_a1z26,
-	.println   	  = _println_a1z26,
-	.encrypt   	  = _encrypt_a1z26,
-	.decrypt   	  = _decrypt_a1z26,
+	.to_string    = _to_string_a1z26,
+	.to_bytes     = _to_bytes_a1z26,
+	.print        = _print_a1z26,
+	.println      = _println_a1z26,
+	.encrypt      = _encrypt_a1z26,
+	.decrypt      = _decrypt_a1z26,
 };

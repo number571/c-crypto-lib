@@ -33,8 +33,8 @@ XOR xor_obj = {
 	.free_memsize = _free_memsize_xor,
 	.set_memsize  = _set_memsize_xor,
 	.set_message  = _set_message_xor,
-	.print 	   	  = _print_xor,
-	.println   	  = _println_xor,
-	.encrypt   	  = _encrypt_xor,
-	.decrypt   	  = _encrypt_xor,
+	.print        = _print_xor,
+	.println      = _println_xor,
+	.encrypt      = _encrypt_xor,
+	.decrypt      = _encrypt_xor,
 };

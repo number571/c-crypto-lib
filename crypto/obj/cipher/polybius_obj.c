@@ -67,14 +67,14 @@ static char _decrypt_polybius (void) {
 }
 
 POLYBIUS polybius_obj = {
-	.encrypted 	  = false,
+	.encrypted    = false,
 	.free_memsize = _free_memsize_polybius,
 	.set_memsize  = _set_memsize_polybius,
 	.set_message  = _set_message_polybius,
-	.set_alpha 	  = set_alpha_polybius,
+	.set_alpha    = set_alpha_polybius,
 	.to_string    = _to_string_polybius,
 	.to_bytes     = _to_bytes_polybius,
-	.print	      = _print_polybius,
+	.print        = _print_polybius,
 	.println      = _println_polybius,
 	.encrypt      = _encrypt_polybius,
 	.decrypt      = _decrypt_polybius,

@@ -67,15 +67,15 @@ static char _decrypt_porte (void) {
 }
 
 PORTE porte_obj = {
-	.encrypted 	  = false,
+	.encrypted    = false,
 	.free_memsize = _free_memsize_porte,
 	.set_memsize  = _set_memsize_porte,
 	.set_message  = _set_message_porte,
-	.set_alpha 	  = set_alpha_porte,
-	.set_char	  = set_char_porte,
+	.set_alpha    = set_alpha_porte,
+	.set_char     = set_char_porte,
 	.to_string    = _to_string_porte,
 	.to_bytes     = _to_bytes_porte,
-	.print	      = _print_porte,
+	.print        = _print_porte,
 	.println      = _println_porte,
 	.encrypt      = _encrypt_porte,
 	.decrypt      = _decrypt_porte,

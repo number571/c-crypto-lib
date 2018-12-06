@@ -33,8 +33,8 @@ ROT13 rot13_obj = {
 	.free_memsize = _free_memsize_rot13,
 	.set_memsize  = _set_memsize_rot13,
 	.set_message  = _set_message_rot13,
-	.print 	   	  = _print_rot13,
-	.println   	  = _println_rot13,
-	.encrypt   	  = _encrypt_rot13,
-	.decrypt   	  = _encrypt_rot13,
+	.print        = _print_rot13,
+	.println      = _println_rot13,
+	.encrypt      = _encrypt_rot13,
+	.decrypt      = _encrypt_rot13,
 };

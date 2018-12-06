@@ -67,15 +67,15 @@ static char _decrypt_bacon (void) {
 }
 
 BACON bacon_obj = {
-	.encrypted 	  = false,
+	.encrypted    = false,
 	.free_memsize = _free_memsize_bacon,
 	.set_memsize  = _set_memsize_bacon,
 	.set_message  = _set_message_bacon,
-	.set_alpha 	  = set_alpha_bacon,
+	.set_alpha    = set_alpha_bacon,
 	.set_char     = set_char_bacon,
 	.to_string    = _to_string_bacon,
 	.to_bytes     = _to_bytes_bacon,
-	.print	      = _print_bacon,
+	.print        = _print_bacon,
 	.println      = _println_bacon,
 	.encrypt      = _encrypt_bacon,
 	.decrypt      = _decrypt_bacon,
