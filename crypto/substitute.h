@@ -1,4 +1,6 @@
-extern char set_alpha_substitute (char * const alph1, char * const alph2);
+#pragma once
+
+extern char set_alpha_substitute (const char * const alph1, const char * const alph2);
 extern char substitute (
     char * const to, 
     const char mode, 

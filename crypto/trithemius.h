@@ -1,3 +1,5 @@
+#pragma once
+
 extern char set_alpha_trithemius (const char * const alpha);
 extern char trithemius (
     char * const to, 
