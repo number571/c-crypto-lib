@@ -15,7 +15,7 @@ char func_key(const char x) {
 int main(void) {
 	char message[100] = "HELLO, WORLD";
 
-	set_alpha_trithemius("ABCDEFGHIJKLMNOPQRSTUVWXYZ ,");
+	set_alpha_trithemius("ABCDEFGHIJKLMNOPQRSTUVWXYZ, ");
 
 	trithemius(message, ENCRYPT_MODE, func_key, message);
 	printf("%s\n", message);
@@ -34,6 +34,6 @@ int main(void) {
 $ gcc main.c crypto/cipher/trithemius.c -o main
 $ ./main
 
-IHQSXKLJDIE 
+IHQSXJMJDIE,
 HELLO, WORLD
 ```
