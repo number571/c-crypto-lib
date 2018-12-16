@@ -7,7 +7,7 @@
 static char __alpha_playfair[MAX_LENGTH] = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
 static char __default_char_playfair = 'X';
 
-static unsigned char __sqrt_length_playfair = 5;
+static unsigned char __sqrt_length_alpha_playfair = 5;
 
 static void _initial_setup_playfair (char * const to, const char * from) {
 	const size_t length = strlen(from);
@@ -86,7 +86,7 @@ static char _set_key_playfair (char * const key) {
 
 
 static void _chars_playfair (char * const to, const char mode) {
-	const unsigned char sqrt = __sqrt_length_playfair;
+	const unsigned char sqrt = __sqrt_length_alpha_playfair;
 
 	const Point one = get_coordinates(*to, __alpha_playfair, sqrt);
 	const Point two = get_coordinates(*(to + 1), __alpha_playfair, sqrt);
@@ -126,7 +126,7 @@ extern char set_alpha_playfair (const char * const alpha) {
 	if (temp >= MAX_LENGTH)
 		return 2;
 
-	__sqrt_length_playfair = sqrt;
+	__sqrt_length_alpha_playfair = sqrt;
 	strcpy(__alpha_playfair, alpha);
 
 	return 0;

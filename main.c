@@ -1,22 +1,18 @@
 #include <stdio.h>
 
-#include "crypto/trithemius.h"
-#include "crypto/macro.h"
+#include "crypto/append/macro.h"
+#include "crypto/caesar_wordkey.h"
 
-char key (const char ch) {
-    return ch * 2 + 1;
-}
+int main(void) {
+	char message[100] = "HELLO, WORLD";
 
-int main (void) {
-    char message[] = "HELLO, WORLD";
+	// set_alpha_caesar_wordkey("ABCDEFGHIJKLMNOPQRSTUVWXYZ, ");
 
-    // ENCRYPTION: IHQSX, LFKGA
-    trithemius(message, ENCRYPT_MODE, key, message);
-    printf("%s\n", message);
+	caesar_wordkey(message, ENCRYPT_MODE, 3, "KNOWN", message);
+	printf("%s\n", message);
 
-    // DECRYPTION: HELLO, WORLD
-    trithemius(message, DECRYPT_MODE, key, message);
-    printf("%s\n", message);
+	caesar_wordkey(message, DECRYPT_MODE, 3, "KNOWN", message);
+	printf("%s\n", message);
 
-    return 0;
+	return 0;
 }

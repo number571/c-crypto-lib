@@ -4,7 +4,7 @@
 #include "../append/types.h"
 
 static char __alpha_vigenere[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static unsigned char __length_vigenere = LEN_ALPHA;
+static unsigned char __length_alpha_vigenere = LEN_ALPHA;
 
 static char _char_vigenere (const char mode, const char key, const char ch) {
 	bool flag[2] = {false, false};
@@ -26,7 +26,7 @@ static char _char_vigenere (const char mode, const char key, const char ch) {
 	}
 
 	if (flag[0] && flag[1])
-		return __alpha_vigenere[(pos.x + pos.y + __length_vigenere) % __length_vigenere];
+		return __alpha_vigenere[(pos.x + pos.y + __length_alpha_vigenere) % __length_alpha_vigenere];
 
 	return ch;
 }
@@ -37,7 +37,7 @@ extern char set_alpha_vigenere (const char * const alpha) {
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_vigenere = (unsigned char)length;
+	__length_alpha_vigenere = (unsigned char)length;
 	strcpy(__alpha_vigenere, alpha);
 
 	return 0;

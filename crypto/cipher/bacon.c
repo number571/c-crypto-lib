@@ -8,7 +8,7 @@
 static char __alpha_bacon[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char __default_char_bacon[2] = {'A', 'B'};
 
-static char _index_char_bacon (const char ch) {
+static char _char_bacon (const char ch) {
 	for (char *p = __alpha_bacon; *p != END_OF_STRING; ++p)
 		if (*p == ch)
 			return p - __alpha_bacon;
@@ -18,7 +18,7 @@ static char _index_char_bacon (const char ch) {
 
 static void _encrypt_bacon (char * to, const char * from) {
 	for (; *from != END_OF_STRING; ++from)
-		*to++ = _index_char_bacon(*from);
+		*to++ = _char_bacon(*from);
 
 	*to = END_OF_NUMBER;
 }

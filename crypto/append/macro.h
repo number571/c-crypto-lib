@@ -12,8 +12,7 @@
 
 #define SQUARE(x) ((x) * (x))
 
-#define \
-	copy(to, Type, from, end) \
+#define copy(to, Type, from, end) \
 	({ \
 		Type *p = from; \
 		while (*p != end) { \
@@ -23,22 +22,38 @@
 		to[p - from] = end; \
 	})
 
-#define \
-	print_nums(Type, from) \
+#define shiftr(Type, from, len) \
+	({ \
+	    Type temp = from[len-1]; \
+	    for (size_t i = len-1; i > 0; i--) \
+	        from[i] = from[i-1]; \
+	    from[0] = temp; \
+	})
+
+#define shiftl(Type, from, len) \
+	({ \
+		Type temp = from[0]; \
+		size_t i = 1; \
+	    while (i < len) { \
+	        from[i-1] = from[i]; \
+	        ++i; \
+	    } \
+	    from[i-1] = temp; \
+	})
+
+#define print_nums(Type, from) \
 	({ \
 		for (Type *p = from; *p != END_OF_NUMBER; ++p) \
 			printf("%d ", *p); \
 	})
 
-#define \
-	println_nums(Type, from) \
+#define println_nums(Type, from) \
 	({ \
 		print_nums(Type, from); \
 		putchar('\n'); \
 	})
 
-#define \
-	print_chars(Type, from) \
+#define print_chars(Type, from) \
 	({ \
 		for (Type *p = from; *p != END_OF_STRING; ++p) \
 			printf("%c", *p); \
@@ -50,8 +65,7 @@
 		putchar('\n'); \
 	})
 
-#define \
-	print_byte(from) \
+#define print_byte(from) \
 	({ \
 		unsigned char *p = &from; \
 		Byte x = {.byte = *p}; \
@@ -66,8 +80,7 @@
 		putchar('\n'); \
 	})
 
-#define \
-	print_bytes(from) \
+#define print_bytes(from) \
 	({ \
 		for (char *p = from; *p != END_OF_NUMBER; ++p) { \
 			Byte x = {.byte = *p}; \

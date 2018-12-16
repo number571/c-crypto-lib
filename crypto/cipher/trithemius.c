@@ -3,10 +3,10 @@
 #include "../append/macro.h"
 
 static char __alpha_trithemius[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static unsigned char __length_trithemius = LEN_ALPHA;
+static unsigned char __length_alpha_trithemius = LEN_ALPHA;
 
 static char _char_trithemius (const char mode, char key, const char ch) {
-	const unsigned char length = __length_trithemius;
+	const unsigned char length = __length_alpha_trithemius;
 
 	for (char *p = __alpha_trithemius; *p != END_OF_STRING; ++p)
 		if (*p == ch) {
@@ -23,7 +23,7 @@ extern char set_alpha_trithemius (const char * const alpha) {
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_trithemius = (unsigned char)length;
+	__length_alpha_trithemius = (unsigned char)length;
 	strcpy(__alpha_trithemius, alpha);
 
 	return 0;

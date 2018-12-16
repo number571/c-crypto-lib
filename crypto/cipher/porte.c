@@ -9,7 +9,7 @@
 static char __alpha_porte[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char __default_char_porte = 'Z';
 
-static unsigned char __length_porte = LEN_ALPHA;
+static unsigned char __length_alpha_porte = LEN_ALPHA;
 
 static void _encrypt_porte (short * to, short * const from) {
 	const size_t length = get_length('s', from, END_OF_STRING);
@@ -26,7 +26,7 @@ static void _encrypt_porte (short * to, short * const from) {
 		Point pos = {0, 0};
 		bool flag[2] = {false, false};
 
-		for (unsigned char i = 0; i < __length_porte; ++i) {
+		for (unsigned char i = 0; i < __length_alpha_porte; ++i) {
 			if (*p_buffer == __alpha_porte[i]) {
 				pos.x = i;
 				flag[0] = true;
@@ -41,7 +41,7 @@ static void _encrypt_porte (short * to, short * const from) {
 				break;
 		}
 
-		*to++ = (pos.x * __length_porte) + pos.y;
+		*to++ = (pos.x * __length_alpha_porte) + pos.y;
 	}
 
 	*to = END_OF_NUMBER;
@@ -54,8 +54,8 @@ static void _decrypt_porte (short * const to, short * from) {
 	short *p_buffer = buffer;
 
 	for (; *from != END_OF_NUMBER; ++from) {
-		*p_buffer++ = __alpha_porte[*from / __length_porte];
-		*p_buffer++ = __alpha_porte[*from % __length_porte];
+		*p_buffer++ = __alpha_porte[*from / __length_alpha_porte];
+		*p_buffer++ = __alpha_porte[*from % __length_alpha_porte];
 	}
 
 	*p_buffer = END_OF_STRING;
@@ -72,7 +72,7 @@ extern char set_alpha_porte (char * const alpha) {
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_porte = (unsigned char)length;
+	__length_alpha_porte = (unsigned char)length;
 	strcpy(__alpha_porte, alpha);
 
 	return 0;

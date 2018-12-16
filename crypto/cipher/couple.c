@@ -3,18 +3,20 @@
 #include "../append/macro.h"
 #include "../append/types.h"
 
-static char __alpha_one_couple[MAX_LENGTH] = "ACEGIKMOQSUWY";
-static char __alpha_two_couple[MAX_LENGTH] = "BDFHJLNPRTVXZ";
+static char __alpha_couple[2][MAX_LENGTH] = {
+	"ACEGIKMOQSUWY",
+	"BDFHJLNPRTVXZ",
+};
 
-static unsigned char __length_couple = LEN_ALPHA / 2;
+static unsigned char __length_alpha_couple = LEN_ALPHA / 2;
 
 static char _char_couple (const char ch) {
-	for (unsigned char x = 0; x < __length_couple; ++x)
-		if (ch == __alpha_one_couple[x]) 
-			return __alpha_two_couple[x];
+	for (unsigned char x = 0; x < __length_alpha_couple; ++x)
+		if (ch == __alpha_couple[0][x]) 
+			return __alpha_couple[1][x];
 
-		else if (ch == __alpha_two_couple[x])
-			return __alpha_one_couple[x];
+		else if (ch == __alpha_couple[1][x])
+			return __alpha_couple[0][x];
 
 	return ch;
 }
@@ -33,10 +35,10 @@ extern char set_alpha_couple (char * const alph1, char * const alph2) {
 			if (*p_alph1 == *p_alph2)
 				return 3;
 
-	__length_couple = (unsigned char)length;
+	__length_alpha_couple = (unsigned char)length;
 
-	strcpy(__alpha_one_couple, alph1);
-	strcpy(__alpha_two_couple, alph2);
+	strcpy(__alpha_couple[0], alph1);
+	strcpy(__alpha_couple[1], alph2);
 
 	return 0;
 }
