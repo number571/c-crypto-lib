@@ -1,21 +1,22 @@
 #include <string.h>
 
-#include "../append/macro.h"
+#include "../append/macro/consts.h"
+#include "../append/types/char.h"
 
-static char __default_char_ancient_sparta = 'Z';
+static uchar_t __default_char_ancient_sparta = 'Z';
 
 static void _encrypt_ancient_sparta (
-	char * to, const char key, const char * const from
+	uchar_t * to, const uchar_t nkey, const uchar_t * const from
 ) {
 	size_t start_length, final_length;
 	start_length = final_length = strlen(from);
 
-	while (final_length % key != 0)
+	while (final_length % nkey != 0)
 		++final_length;
 
-	const size_t block_length = final_length / key;
+	const size_t block_length = final_length / nkey;
 
-	char buffer[final_length + 1];
+	uchar_t buffer[final_length + 1];
 	strcpy(buffer, from);
 
 	while (start_length++ < final_length)
@@ -29,15 +30,15 @@ static void _encrypt_ancient_sparta (
 }
 
 static void _decrypt_ancient_sparta (
-	char * const to, const char key, const char * const from
+	uchar_t * const to, const uchar_t nkey, const uchar_t * const from
 ) {
 	const size_t length = strlen(from);
 
-	char buffer[length + 1];
-	char *p_buffer = buffer;
+	uchar_t buffer[length + 1];
+	uchar_t *p_buffer = buffer;
 
-	for (size_t x = 0; x < key; ++x)
-		for (size_t y = x; y < length; y += key)
+	for (size_t x = 0; x < nkey; ++x)
+		for (size_t y = x; y < length; y += nkey)
 			*p_buffer++ = from[y];
 
 	*p_buffer = END_OF_STRING;
@@ -45,26 +46,26 @@ static void _decrypt_ancient_sparta (
 	strcpy(to, buffer);
 }
 
-extern void set_char_ancient_sparta (const char ch) {
+extern void set_char_ancient_sparta (const uchar_t ch) {
 	__default_char_ancient_sparta = ch;
 }
 
 extern char ancient_sparta (
-	char * const to, 
-	const char mode, 
-	const char key, 
-	const char * const from
+	uchar_t * const to, 
+	const schar_t mode, 
+	const uchar_t nkey, 
+	const uchar_t * const from
 ) {
-	if (key < 1) return 2;
+	if (!nkey) return 1;
 
 	switch (mode) {
 		case ENCRYPT_MODE: 
-			_encrypt_ancient_sparta(to, key, from); 
+			_encrypt_ancient_sparta(to, nkey, from); 
 		break;
 		case DECRYPT_MODE: 
-			_decrypt_ancient_sparta(to, key, from); 
+			_decrypt_ancient_sparta(to, nkey, from); 
 		break;
-		default: return 1;
+		default: return 2;
 	}
 	
 	return 0;

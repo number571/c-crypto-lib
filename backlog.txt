@@ -1,0 +1,22 @@
+//
+~~- hill
+- hash-functions
+- fence
+- vernam
+- books
+- frequency
+- break_caesar
+- cardano
+- homophone
+- double_cifir
+- affine
+
+// 
+~~1. hill
+2. fence
+3. homophone
+4. affine
+5. double_cifir
+
+//
+~1. adfgvx

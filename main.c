@@ -1,22 +1,18 @@
 #include <stdio.h>
 
-#include "crypto/append/macro.h"
-#include "crypto/trithemius.h"
-
-char func_key(const char x) {
-	return x * 2 + 1;
-}
+#include "crypto/append/macro/consts.h"
+#include "crypto/hill.h"
 
 int main(void) {
-	char message[100] = "HELLO, WORLD";
+    char message[100] = "HELLO, WORLD";
+    
+    set_alpha_hill("ABCDEFGHIJKLMNOPQRSTUVWXYZ,. ");
 
-	set_alpha_trithemius("ABCDEFGHIJKLMNOPQRSTUVWXYZ, ");
+    hill(message, ENCRYPT_MODE, "QWERTYUIO", message);
+    printf("%s\n", message);
 
-	trithemius(message, ENCRYPT_MODE, func_key, message);
-	printf("%s\n", message);
+    hill(message, DECRYPT_MODE, "QWERTYUIO", message);
+    printf("%s\n", message);
 
-	trithemius(message, DECRYPT_MODE, func_key, message);
-	printf("%s\n", message);
-
-	return 0;
+    return 0;
 }

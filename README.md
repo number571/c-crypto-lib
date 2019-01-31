@@ -5,7 +5,7 @@
 ```c
 #include <stdio.h>
 
-#include "crypto/append/macro.h"
+#include "crypto/append/macro/consts.h"
 #include "crypto/trithemius.h"
 
 char func_key(const char x) {

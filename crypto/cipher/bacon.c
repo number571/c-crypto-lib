@@ -1,29 +1,31 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../append/macro.h"
-#include "../append/types.h"
-#include "../append/funcs.h"
+#include "../append/macro/consts.h"
+#include "../append/macro/copy.h"
+#include "../append/types/byte.h"
+#include "../append/types/char.h"
+#include "../append/funcs/get_length.h"
 
-static char __alpha_bacon[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static char __default_char_bacon[2] = {'A', 'B'};
+static uchar_t __alpha_bacon[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static uchar_t __default_char_bacon[2] = {'A', 'B'};
 
-static char _char_bacon (const char ch) {
-	for (char *p = __alpha_bacon; *p != END_OF_STRING; ++p)
+static schar_t _char_bacon (const uchar_t ch) {
+	for (uchar_t *p = __alpha_bacon; *p != END_OF_STRING; ++p)
 		if (*p == ch)
 			return p - __alpha_bacon;
 
 	return ch + END_OF_NUMBER;
 }
 
-static void _encrypt_bacon (char * to, const char * from) {
+static void _encrypt_bacon (schar_t * to, const schar_t * from) {
 	for (; *from != END_OF_STRING; ++from)
-		*to++ = _char_bacon(*from);
+		*to++ = _char_bacon((uchar_t)*from);
 
 	*to = END_OF_NUMBER;
 }
 
-static void _decrypt_bacon (char * to, const char * from) {
+static void _decrypt_bacon (schar_t * to, const schar_t * from) {
 	for (; *from != END_OF_NUMBER; ++from)
 		if (*from < 0)
 			*to++ = *from - END_OF_NUMBER;
@@ -33,12 +35,12 @@ static void _decrypt_bacon (char * to, const char * from) {
 	*to = END_OF_STRING;
 }
 
-extern void set_char_bacon (const char ch1, const char ch2) {
+extern void set_char_bacon (const uchar_t ch1, const uchar_t ch2) {
 	__default_char_bacon[0] = ch1;
 	__default_char_bacon[1] = ch2;
 }
 
-extern char set_alpha_bacon (const char * const alpha) {
+extern char set_alpha_bacon (const uchar_t * const alpha) {
 	if (strlen(alpha) >= MAX_LENGTH)
 		return 1;
 
@@ -47,14 +49,14 @@ extern char set_alpha_bacon (const char * const alpha) {
 	return 0;
 }
 
-extern void to_string_bacon (char * to, char * const from) {
+extern void to_string_bacon (uchar_t * to, schar_t * const from) {
 	Byte x;
 	const size_t length = get_length('c', from, END_OF_NUMBER);
 
-	char buffer[length + 1];
-	copy(buffer, char, from, END_OF_NUMBER);
+	schar_t buffer[length + 1];
+	COPY(buffer, schar_t, from, END_OF_NUMBER);
 
-	for (char *p_buffer = buffer; *p_buffer != END_OF_NUMBER; ++p_buffer)
+	for (schar_t *p_buffer = buffer; *p_buffer != END_OF_NUMBER; ++p_buffer)
 		if (*p_buffer >= 0) {
 			x.byte = *p_buffer;
 			*to++ = x.bit._7 ? __default_char_bacon[1] : __default_char_bacon[0];
@@ -65,14 +67,15 @@ extern void to_string_bacon (char * to, char * const from) {
 			*to++ = x.bit._2 ? __default_char_bacon[1] : __default_char_bacon[0];
 			*to++ = x.bit._1 ? __default_char_bacon[1] : __default_char_bacon[0];
 			*to++ = x.bit._0 ? __default_char_bacon[1] : __default_char_bacon[0];
-		} else *to++ = *p_buffer - END_OF_NUMBER;
+		} else 
+			*to++ = *p_buffer - END_OF_NUMBER;
 
 	*to = END_OF_STRING;
 }
 
-extern void to_bytes_bacon (char * to, const char * from) {
+extern void to_bytes_bacon (schar_t * to, const uchar_t * from) {
 	Byte x;
-	char position = 0;
+	schar_t position = 0;
 
 	for (; *from != END_OF_STRING; ++from) 
 		if (*from == __default_char_bacon[0] || *from == __default_char_bacon[1]) {
@@ -87,16 +90,17 @@ extern void to_bytes_bacon (char * to, const char * from) {
 				case 7: x.bit._0 = (*from == __default_char_bacon[0]) ? 0 : 1; break;
 			}
 			++position;
-			if (position != 0 && position % 8 == 0) {
+			if (position && !(position % 8)) {
 				*to++ = x.byte;
 				position = 0;
 			}
-		} else *to++ = *from + END_OF_NUMBER;
+		} else 
+			*to++ = *from + END_OF_NUMBER;
 
 	*to = END_OF_NUMBER;
 }
 
-extern void print_bacon (const char * from) {
+extern void print_bacon (const schar_t * from) {
 	for (; *from != END_OF_NUMBER; ++from)
 		if (*from >= 0) {
 			Byte x = { .byte = *from };
@@ -113,12 +117,16 @@ extern void print_bacon (const char * from) {
 			putchar(*from - END_OF_NUMBER);
 }
 
-extern void println_bacon (const char * from) {
+extern void println_bacon (const schar_t * from) {
 	print_bacon(from);
 	putchar('\n');
 }
 
-extern char bacon (char * const to, const char mode, const char * const from) {
+extern char bacon (
+	schar_t * const to, 
+	const schar_t mode, 
+	const schar_t * const from
+) {
 	switch (mode) {
 		case ENCRYPT_MODE:
 			_encrypt_bacon(to, from);

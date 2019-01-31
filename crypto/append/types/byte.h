@@ -1,12 +1,5 @@
 #pragma once
 
-typedef enum { false, true } bool;
-
-typedef struct {
-	char x; 
-	char y;
-} Point;
-
 typedef union {
 	unsigned char byte;
 	struct {

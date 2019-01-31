@@ -1,7 +1,28 @@
 #pragma once
 
-extern char set_alpha_couple (char * const alph1, char * const alph2);
+/*
+	A[1] = "ACEGIKMOQSUWY"
+	A[2] = "BDFHJLNPRTVXZ"
+		(
+			A[1] <-> A[2]
+		)
+	M = "HELLO"
+	E(M) = 
+			'H' = 'G'
+			'E' = 'F'
+			'L' = 'K'
+			'O' = 'P'
+		C = "GFKKP"
+	E(C) = 
+			'G' = 'H'
+			'F' = 'E'
+			'K' = 'L'
+			'P' = 'O'
+		M = "HELLO"
+*/
+
+extern char set_alpha_couple (unsigned char * const alph1, unsigned char * const alph2);
 extern char couple (
-	char * to, 
-	const char * from
+	unsigned char * to, 
+	const unsigned char * from
 );

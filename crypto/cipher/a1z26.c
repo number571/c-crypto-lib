@@ -2,22 +2,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../append/macro.h"
-#include "../append/types.h"
+#include "../append/macro/consts.h"
+#include "../append/types/char.h"
+#include "../append/funcs/get_length.h"
 
 #define END(x) ((mode == x) ? (END_OF_STRING) : (END_OF_NUMBER))
 
-extern void to_string_a1z26 (char * to, const char * from) {
-	const size_t length = strlen(from);
+extern void to_string_a1z26 (uchar_t * const to, const schar_t * from) {
+	const size_t length = get_length('c', from, END_OF_NUMBER);
 
-	char buffer[length * 4 + 1];
-	char *p_buffer = buffer;
+	uchar_t buffer[length * 4 + 1];
+	uchar_t *p_buffer = buffer;
 
 	for (; *from != END_OF_NUMBER; ++from) {
-		char temp[5];
+		uchar_t temp[5];
 		sprintf(temp, "%d ", *from);
 
-		for (char *p_temp = temp; *p_temp != END_OF_STRING; ++p_temp)
+		for (uchar_t *p_temp = temp; *p_temp != END_OF_STRING; ++p_temp)
 			*p_buffer++ = *p_temp;
 	}
 
@@ -25,9 +26,9 @@ extern void to_string_a1z26 (char * to, const char * from) {
 	strcpy(to, buffer);
 }
 
-extern void to_bytes_a1z26 (char * to, const char * from) {
-	char temp[5];
-	char *p_temp = temp;
+extern void to_bytes_a1z26 (schar_t * to, const uchar_t * from) {
+	uchar_t temp[5];
+	uchar_t *p_temp = temp;
 
 	for (; *from != END_OF_STRING; ++from) {
 		if (*from == ' ') {
@@ -37,18 +38,22 @@ extern void to_bytes_a1z26 (char * to, const char * from) {
 		} else
 			*p_temp++ = *from;
 	}
-	
+
 	*p_temp = END_OF_STRING;
 	*to++ = atoi(temp);
 	
 	*to = END_OF_NUMBER;
 }
 
-extern char a1z26 (char * to, const char mode, const char * from) {
+extern char a1z26 (
+	schar_t * to, 
+	const schar_t mode, 
+	const schar_t * from
+) {
 	if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE)
 		return 1;
 
-	char buffer[2];
+	uchar_t buffer[2];
 
 	switch (mode) {
 		case ENCRYPT_MODE:
@@ -68,6 +73,6 @@ extern char a1z26 (char * to, const char mode, const char * from) {
 			*to++ = *from + (mode * END_OF_NUMBER);
 
 	*to = END(DECRYPT_MODE);
-	
+
 	return 0;
 }

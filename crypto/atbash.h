@@ -1,7 +1,13 @@
 #pragma once
 
-extern char set_alpha_atbash (const char * const alpha);
+/*
+	A = 'A' .. 'Z'
+	M = 'A' .. 'Z'
+	C = 'Z' .. 'A'
+*/
+
+extern char set_alpha_atbash (const unsigned char * const alpha);
 extern char atbash (
-	char * to,
-	const char * from
+	unsigned char * to,
+	const unsigned char * from
 );

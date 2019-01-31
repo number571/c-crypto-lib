@@ -1,45 +1,45 @@
 #include <string.h>
 
-#include "../append/macro.h"
+#include "../append/macro/consts.h"
+#include "../append/types/char.h"
 
-static char __alpha_trithemius[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static unsigned char __length_alpha_trithemius = LEN_ALPHA;
+static uchar_t __alpha_trithemius[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static uchar_t __length_alpha_trithemius = LEN_ALPHA;
 
-static char _char_trithemius (const char mode, char key, const char ch) {
-	const unsigned char length = __length_alpha_trithemius;
+static uchar_t _char_trithemius (const schar_t mode, schar_t key, const uchar_t ch) {
+	const uchar_t length = __length_alpha_trithemius;
+	key = ( (key < 0) ? (length + (key % length)) : (key % length) ) * mode;
 
-	for (char *p = __alpha_trithemius; *p != END_OF_STRING; ++p)
-		if (*p == ch) {
-			key = ( (key < 0) ? (length + (key % length)) : (key % length) ) * mode;
+	for (uchar_t *p = __alpha_trithemius; *p != END_OF_STRING; ++p)
+		if (*p == ch)
 			return __alpha_trithemius[(p - __alpha_trithemius + key + length) % length];
-		}
 		
 	return ch;
 }
 
-extern char set_alpha_trithemius (const char * const alpha) {
+extern char set_alpha_trithemius (const uchar_t * const alpha) {
 	const size_t length = strlen(alpha);
 
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_alpha_trithemius = (unsigned char)length;
+	__length_alpha_trithemius = (uchar_t)length;
 	strcpy(__alpha_trithemius, alpha);
 
 	return 0;
 }
 
 extern char trithemius (
-	char * to, 
-	const char mode, 
-	char (* const key) (const char x), 
-	char * const from
+	uchar_t * to, 
+	const schar_t mode, 
+	schar_t (* const key) (const schar_t x), 
+	uchar_t * const from
 ) {
 	if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE)
 		return 1;
 
-	for (char *p_from = from; *p_from != END_OF_STRING; ++p_from)
-		*to++ = _char_trithemius(mode, key((char) (p_from - from)), *p_from);
+	for (uchar_t *p_from = from; *p_from != END_OF_STRING; ++p_from)
+		*to++ = _char_trithemius(mode, key(p_from - from), *p_from);
 			
 	*to = END_OF_STRING;
 

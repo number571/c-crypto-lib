@@ -1,6 +1,7 @@
-#include "../append/macro.h"
+#include "../append/macro/consts.h"
+#include "../append/types/char.h"
 
-static char _char_rot13 (const char ch) {
+static uchar_t _char_rot13 (const uchar_t ch) {
 	if ('A' <= ch && ch <= 'Z') 
 		return ch % LEN_ALPHA + 'A';
 
@@ -10,7 +11,10 @@ static char _char_rot13 (const char ch) {
 	return ch;
 }
 
-extern char rot13 (char * to, const char * from) {
+extern char rot13 (
+	uchar_t * to, 
+	const uchar_t * from
+) {
 	for (; *from != END_OF_STRING; ++from)
 		*to++ = _char_rot13(*from);
 	
