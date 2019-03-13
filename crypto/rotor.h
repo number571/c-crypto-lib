@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z'
 	M = "HELLO"
@@ -23,11 +25,11 @@
 		M = "HELLO"
 */
 
-extern char set_alpha_rotor (const unsigned char * const alpha);
+extern char set_alpha_rotor (const uint8_t * const alpha);
 extern char rotor (
-	unsigned char * to, 
-	const signed char mode, 
-	const unsigned char period, 
-	signed char * const rot, 
-	const unsigned char * const from
+	uint8_t * to, 
+	const int8_t mode, 
+	const uint8_t period, 
+	int8_t * const rot, 
+	const uint8_t * const from
 );

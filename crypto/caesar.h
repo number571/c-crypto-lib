@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z'
 	M = "HELLO"
@@ -19,10 +21,10 @@
 
 */
 
-extern char set_alpha_caesar (const unsigned char * const alpha);
+extern char set_alpha_caesar (const uint8_t * const alpha);
 extern char caesar (
-	unsigned char * to, 
-	const signed char mode, 
-	signed char nkey, 
-	const unsigned char * from
+	uint8_t * to, 
+	const int8_t mode, 
+	uint8_t nkey, 
+	const uint8_t * from
 );

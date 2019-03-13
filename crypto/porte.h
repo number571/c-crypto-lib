@@ -1,6 +1,7 @@
 #pragma once
 
-#include "append/types/integer.h"
+#include <stdint.h>
+#include "utils/types/integer.h"
 
 /*
 	A = ('A' .. 'O') * ('A' .. 'O') =
@@ -39,12 +40,12 @@
 		M = "HELLO"
 */
 
-extern void set_char_porte  (const unsigned char ch);
-extern char set_alpha_porte (unsigned char * const alpha);
-extern void to_string_porte (INTEGER_TYPE * const to, const INTEGER_TYPE * from);
-extern void to_bytes_porte  (INTEGER_TYPE * to, const INTEGER_TYPE * from);
+extern void set_char_porte  (const uint8_t ch);
+extern char set_alpha_porte (uint8_t * const alpha);
+extern void to_string_porte (__INTEGER__ * const to, const __INTEGER__ * from);
+extern void to_bytes_porte  (__INTEGER__ * to, const __INTEGER__ * from);
 extern char porte (
-	INTEGER_TYPE * const to,
-	const signed char mode,
-	INTEGER_TYPE * const from
+	__INTEGER__ * const to,
+	const int8_t mode,
+	__INTEGER__ * const from
 );

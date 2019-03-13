@@ -1,47 +1,47 @@
+#include <stdint.h>
 #include <string.h>
 
-#include "../append/macro/consts.h"
-#include "../append/types/char.h"
+#include "../utils/macro/consts.h"
 
-static uchar_t __alpha_rotor[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static uchar_t __length_alpha_rotor = LEN_ALPHA;
+static uint8_t __alpha[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static uint8_t __length_alpha = LEN_ALPHA;
 
-static uchar_t _char_rotor (const schar_t mode, schar_t key, const uchar_t ch) {
-	key = ( (key < 0) ? (__length_alpha_rotor + (key % __length_alpha_rotor)) : (key % __length_alpha_rotor) ) * mode;
+static uint8_t _char_encrypt (const int8_t mode, int8_t key, const uint8_t ch) {
+	key = ( (key < 0) ? (__length_alpha + (key % __length_alpha)) : (key % __length_alpha) ) * mode;
 
-	for (uchar_t *p = __alpha_rotor; *p != END_OF_STRING; ++p)
+	for (uint8_t *p = __alpha; *p != END_OF_STRING; ++p)
 		if (*p == ch)
-			return __alpha_rotor[(p - __alpha_rotor + key + __length_alpha_rotor) % __length_alpha_rotor];
+			return __alpha[(p - __alpha + key + __length_alpha) % __length_alpha];
 
 	return ch;
 }
 
-extern schar_t set_alpha_rotor (const uchar_t * const alpha) {
+extern int8_t set_alpha_rotor (const uint8_t * const alpha) {
 	const size_t length = strlen(alpha);
 
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_alpha_rotor = (uchar_t)length;
-	strcpy(__alpha_rotor, alpha);
+	__length_alpha = (uint8_t)length;
+	strcpy(__alpha, alpha);
 
 	return 0;
 }
 
 extern char rotor (
-	uchar_t * to,
-	const schar_t mode, 
-	const uchar_t period, 
-	schar_t * const rot, 
-	const uchar_t * const from
+	uint8_t * to,
+	const int8_t mode, 
+	const uint8_t period, 
+	int8_t * rotor_key, 
+	const uint8_t * const from
 ) {
 	if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE)
 		return 1;
 
-	if (!period) 
+	if (period == 0)
 		return 2;
 
-	schar_t *key = rot;
+	int8_t *key = rotor_key;
 
 	if (*key == END_OF_NUMBER)
 		return 3;
@@ -50,10 +50,10 @@ extern char rotor (
 		if (index && !(index % period)) {
 			++key;
 			if (*key == END_OF_NUMBER) 
-				key = rot;
+				key = rotor_key;
 		}
 
-		*to++ = _char_rotor(mode, *key, from[index]);
+		*to++ = _char_encrypt(mode, *key, from[index]);
 	}
 
 	*to = END_OF_STRING;

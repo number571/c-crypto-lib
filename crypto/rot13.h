@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z'
 	M = "HELLO"
@@ -18,6 +20,6 @@
 */
 
 extern char rot13 (
-	unsigned char * to, 
-	const unsigned char * from
+	uint8_t * to, 
+	const uint8_t * from
 );

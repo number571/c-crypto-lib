@@ -1,6 +1,9 @@
 #pragma once
 
-#include "append/types/integer.h"
+#include <stdint.h>
+#include <stddef.h>
+
+#include "utils/types/integer.h"
 
 /*
 	M = "HELLO"
@@ -11,7 +14,7 @@
 			('L' = 76) ^ 'R' = 30
 			('L' = 76) ^ 'L' = 76
 			('O' = 79) ^ 'D' = 11
-		C = 75 70 79 76
+		C = 31 10 30 76 11
 	D(C, K) = 
 			31 ^ 'W' = 72
 			10 ^ 'O' = 69
@@ -22,7 +25,8 @@
 */
 
 extern char xor_wordkey (
-	INTEGER_TYPE * to, 
-	unsigned char * const key, 
-	const INTEGER_TYPE * from
+	__INTEGER__ * to, 
+	uint8_t * const key,
+	const size_t length,
+	const __INTEGER__ * from
 );

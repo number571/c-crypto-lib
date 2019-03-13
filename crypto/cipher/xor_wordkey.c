@@ -1,27 +1,18 @@
-#include "../append/macro/consts.h"
-#include "../append/types/char.h"
-#include "../append/types/integer.h"
+#include <stdint.h>
+#include <string.h>
+
+#include "../utils/types/integer.h"
 
 extern char xor_wordkey (
-	INTEGER_TYPE * to, 
-	uchar_t * const key, 
-	const INTEGER_TYPE * from
+	__INTEGER__ * to, 
+	uint8_t * const key,
+	const size_t length,
+	const __INTEGER__ * from
 ) {
-	uchar_t *p_key = key;
+	const size_t length_key = strlen(key);
 
-	for (; *from != END_OF_NUMBER; ++from) {
-		INTEGER_TYPE temp = *from ^ *p_key++;
+	for (size_t i = 0; i < length; ++i)
+		*to++ = from[i] ^ key[i % length_key];
 
-		if (!temp) 
-			*to++ = *from;
-		else 
-			*to++ = temp;
-
-		if (!*p_key) 
-			p_key = key;
-	}
-
-	*to = END_OF_NUMBER;
-	
 	return 0;
 }

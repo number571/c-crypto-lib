@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = ('A' .. 'O') * ('A' .. 'O') = 
 		A B C D E F G H I J K L M N O
@@ -35,10 +37,10 @@
 		M = "HELLO"
 */
 
-extern char set_alpha_vigenere (const unsigned char * const alpha);
+extern char set_alpha_vigenere (const uint8_t * const alpha);
 extern char vigenere (
-	unsigned char * to,
-	const signed char mode,
-	const unsigned char * const key,
-	unsigned char * const from
+	uint8_t * to,
+	const int8_t mode,
+	const uint8_t * const key,
+	uint8_t * const from
 );

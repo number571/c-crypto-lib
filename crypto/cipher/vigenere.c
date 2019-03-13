@@ -1,63 +1,65 @@
+#include <stdint.h>
 #include <string.h>
 
-#include "../append/macro/consts.h"
-#include "../append/types/bool.h"
-#include "../append/types/char.h"
-#include "../append/types/point.h"
+#include "../utils/macro/consts.h"
 
-static uchar_t __alpha_vigenere[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static uchar_t __length_alpha_vigenere = LEN_ALPHA;
+static uint8_t __alpha[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static uint8_t __length_alpha = LEN_ALPHA;
 
-static uchar_t _char_vigenere (const schar_t mode, const uchar_t key, const uchar_t ch) {
-	bool flag[2] = {false, false};
-	Point pos = {0, 0};
-
-	for (uchar_t *p = __alpha_vigenere; *p != END_OF_STRING; ++p) {
-		if (*p == ch) {
-			pos.x = (p - __alpha_vigenere);
-			flag[0] = true;
-		}
-
-		if (*p == key) {
-			pos.y = (p - __alpha_vigenere) * mode;
-			flag[1] = true;
-		}
-		
-		if (flag[0] && flag[1])
-			break;
-	}
-
-	if (flag[0] && flag[1])
-		return __alpha_vigenere[(pos.x + pos.y + __length_alpha_vigenere) % __length_alpha_vigenere];
+static uint8_t _char_encrypt (const int8_t mode, const uint8_t k, const uint8_t ch) {
+	for (uint8_t *p = __alpha; *p != END_OF_STRING; ++p)
+		if (*p == ch)
+			return __alpha[((p - __alpha) + (mode * k) + __length_alpha) % __length_alpha];
 
 	return ch;
 }
 
-extern char set_alpha_vigenere (const uchar_t * const alpha) {
+static char _index_key (uint8_t * const indexed_key, uint8_t * const key) {
+	uint8_t *p_key = key;
+	size_t count = 0;
+
+	for (; *p_key != END_OF_STRING; ++p_key)
+		for (uint8_t *p = __alpha; *p != END_OF_STRING; ++p)
+			if (*p_key == *p) {
+				indexed_key[p_key - key] = p - __alpha;
+				++count;
+			}
+
+	if ((p_key - key) != count)
+		return 1;
+
+	return 0;
+}
+
+extern char set_alpha_vigenere (const uint8_t * const alpha) {
 	const size_t length = strlen(alpha);
 
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_alpha_vigenere = (uchar_t)length;
-	strcpy(__alpha_vigenere, alpha);
+	__length_alpha = (uint8_t)length;
+	strcpy(__alpha, alpha);
 
 	return 0;
 }
 
 extern char vigenere (
-	uchar_t * to,
-	const schar_t mode,
-	const uchar_t * const key,
-	uchar_t * const from
+	uint8_t * to,
+	const int8_t mode,
+	const uint8_t * const key,
+	uint8_t * const from
 ) {
 	if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE)
 		return 1;
 
 	const size_t length = strlen(key);
 
-	for (uchar_t *p_from = from; *p_from != END_OF_STRING; ++p_from)
-		*to++ = _char_vigenere(mode, key[(p_from - from) % length], *p_from);
+	uint8_t indexed_key[length];
+	if (_index_key(indexed_key, key))
+		return 2;
+
+	for (uint8_t *p_from = from; *p_from != END_OF_STRING; ++p_from)
+		*to++ = _char_encrypt(mode, indexed_key[(p_from - from) % length], *p_from);
 
 	*to = END_OF_STRING;
 

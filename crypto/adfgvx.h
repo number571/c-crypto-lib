@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z' + '0' .. '9'
 	M = "HELLO"
@@ -58,11 +60,11 @@
 		M = "HELLO9"
 */
 
-extern char set_char_adfgvx  (const unsigned char ch);
-extern char set_alpha_adfgvx (const unsigned char * const alph1, const unsigned char * const alph2);
+extern char set_char_adfgvx  (const uint8_t ch);
+extern char set_alpha_adfgvx (const uint8_t * const alph1, const uint8_t * const alph2);
 extern char adfgvx (
-	unsigned char * const to,
-	const signed char mode,
-	unsigned char * const key,
-	const unsigned char * const from
+	uint8_t * const to,
+	const int8_t mode,
+	uint8_t * const key,
+	const uint8_t * const from
 );

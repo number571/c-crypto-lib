@@ -2,19 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../append/macro/consts.h"
-#include "../append/types/bool.h"
-#include "../append/types/char.h"
-#include "../append/funcs/get_length.h"
+#include "../utils/funcs/length.h"
+
+#include "../utils/macro/consts.h"
+
+#include "../utils/types/bool.h"
 
 typedef struct {
-	uchar_t buffer[MAX_LENGTH];
-	uchar_t count;
+	uint8_t buffer[MAX_LENGTH];
+	uint8_t count;
 } Indexed;
 
-static void _encrypt_indexed (schar_t * to, uchar_t * key, const uchar_t * from) {
+static void _encrypt (int8_t * to, uint8_t * key, const uint8_t * from) {
 	Indexed in_object = { {0}, 0 };
-	uchar_t first_symbol = 0;
+	uint8_t first_symbol = 0;
 
 	for (; *from != END_OF_STRING; ++from) {
 		if (*from >= MAX_LENGTH)
@@ -38,7 +39,7 @@ static void _encrypt_indexed (schar_t * to, uchar_t * key, const uchar_t * from)
 	*to = END_OF_NUMBER;
 }
 
-static void _decrypt_indexed (uchar_t * to, const uchar_t * key, const schar_t * from) {
+static void _decrypt (uint8_t * to, const uint8_t * key, const int8_t * from) {
 	Indexed in_object = { {0}, 0 };
 
 	for (; *key != END_OF_STRING; ++key)
@@ -50,17 +51,17 @@ static void _decrypt_indexed (uchar_t * to, const uchar_t * key, const schar_t *
 	*to = END_OF_STRING;
 }
 
-extern void to_string_indexed (uchar_t * const to, const schar_t * from) {
-	const size_t length = get_length('c', from, END_OF_NUMBER);
+extern void to_string_indexed (uint8_t * const to, const int8_t * from) {
+	const size_t length = _length('c', from, END_OF_NUMBER);
 
-	uchar_t buffer[length * 3 + 1];
-	uchar_t *p_buffer = buffer;
+	uint8_t buffer[length * 3 + 1];
+	uint8_t *p_buffer = buffer;
 
 	for (; *from != END_OF_NUMBER; ++from) {
-		uchar_t temp[4];
+		uint8_t temp[4];
 		sprintf(temp, "%d ", *from);
 
-		for (uchar_t *p_temp = temp; *p_temp != END_OF_STRING; ++p_temp)
+		for (uint8_t *p_temp = temp; *p_temp != END_OF_STRING; ++p_temp)
 			*p_buffer++ = *p_temp;
 	}
 
@@ -68,9 +69,9 @@ extern void to_string_indexed (uchar_t * const to, const schar_t * from) {
 	strcpy(to, buffer);
 }
 
-extern void to_bytes_indexed (schar_t * to, const uchar_t * from) {
-	uchar_t temp[4];
-	uchar_t *p_temp = temp;
+extern void to_bytes_indexed (int8_t * to, const uint8_t * from) {
+	uint8_t temp[4];
+	uint8_t *p_temp = temp;
 
 	for (; *from != END_OF_STRING; ++from) {
 		if (*from == ' ') {
@@ -88,17 +89,17 @@ extern void to_bytes_indexed (schar_t * to, const uchar_t * from) {
 }
 
 extern char indexed (
-	schar_t * to,
-	const schar_t mode,
-	uchar_t * key,
-	const schar_t * from
+	int8_t * to,
+	const int8_t mode,
+	uint8_t * key,
+	const int8_t * from
 ) {
 	switch (mode) {
 		case ENCRYPT_MODE:
-			_encrypt_indexed(to, key, from);
+			_encrypt(to, key, from);
 		break;
 		case DECRYPT_MODE:
-			_decrypt_indexed(to, key, from);
+			_decrypt(to, key, from);
 		break;
 		default: return 1;
 	}

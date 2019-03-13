@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z'
 	M = "HELLO"
@@ -27,11 +29,11 @@
 		M = "HELLO"
 */
 
-extern char set_alpha_caesar_wordkey (const unsigned char * const alpha);
+extern char set_alpha_caesar_wordkey (const uint8_t * const alpha);
 extern char caesar_wordkey (
-	unsigned char * to, 
-	const signed char mode, 
-	signed char nkey, 
-	unsigned char * const skey,
-	const unsigned char * from
+	uint8_t * to, 
+	const int8_t mode, 
+	int8_t nkey, 
+	uint8_t * const skey,
+	const uint8_t * from
 );

@@ -1,13 +1,15 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z'
 	M = 'A' .. 'Z'
 	C = 'Z' .. 'A'
 */
 
-extern char set_alpha_atbash (const unsigned char * const alpha);
+extern char set_alpha_atbash (const uint8_t * const alpha);
 extern char atbash (
-	unsigned char * to,
-	const unsigned char * from
+	uint8_t * to,
+	const uint8_t * from
 );

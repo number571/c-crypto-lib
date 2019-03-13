@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = ('A' .. 'Z') mod (sqrt 'A' .. 'Z') =
 		  1 2 3 4 5 6
@@ -24,11 +26,11 @@
 		M = "HELLO"
 */
 
-extern char set_alpha_polybius (const unsigned char * const alpha);
-extern void to_string_polybius (unsigned char * const to, const signed char * from);
-extern void to_bytes_polybius (signed char * to, const unsigned char * from);
+extern char set_alpha_polybius (const uint8_t * const alpha);
+extern void to_string_polybius (uint8_t * const to, const int8_t * from);
+extern void to_bytes_polybius (int8_t * to, const uint8_t * from);
 extern char polybius (
-	signed char * const to, 
-	const signed char mode, 
-	const signed char * const from
+	int8_t * const to, 
+	const int8_t mode, 
+	const int8_t * const from
 );

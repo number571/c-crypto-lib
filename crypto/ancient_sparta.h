@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	M = "HELLO"
 	K = 3
@@ -19,10 +21,10 @@
 		M = "HELLOZ"
 */
 
-extern void set_char_ancient_sparta (const unsigned char ch);
+extern void set_char_ancient_sparta (const uint8_t ch);
 extern char ancient_sparta (
-	unsigned char * const to, 
-	const signed char mode, 
-	const unsigned char key, 
-	const unsigned char * const from
+	uint8_t * const to, 
+	const int8_t mode, 
+	const uint8_t key, 
+	const uint8_t * const from
 );

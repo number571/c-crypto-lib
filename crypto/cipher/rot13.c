@@ -1,7 +1,8 @@
-#include "../append/macro/consts.h"
-#include "../append/types/char.h"
+#include <stdint.h>
 
-static uchar_t _char_rot13 (const uchar_t ch) {
+#include "../utils/macro/consts.h"
+
+static uint8_t _char_encrypt (const uint8_t ch) {
 	if ('A' <= ch && ch <= 'Z') 
 		return ch % LEN_ALPHA + 'A';
 
@@ -12,11 +13,11 @@ static uchar_t _char_rot13 (const uchar_t ch) {
 }
 
 extern char rot13 (
-	uchar_t * to, 
-	const uchar_t * from
+	uint8_t * to, 
+	const uint8_t * from
 ) {
 	for (; *from != END_OF_STRING; ++from)
-		*to++ = _char_rot13(*from);
+		*to++ = _char_encrypt(*from);
 	
 	*to = END_OF_STRING;
 

@@ -1,36 +1,37 @@
+#include <stdint.h>
 #include <string.h>
 
-#include "../append/macro/consts.h"
-#include "../append/types/bool.h"
-#include "../append/types/char.h"
+#include "../utils/macro/consts.h"
 
-static uchar_t __alpha_caesar[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static uchar_t __length_alpha_caesar = LEN_ALPHA;
+#include "../utils/types/bool.h"
 
-static uchar_t _char_caesar_wordkey (const schar_t mode, const schar_t nkey, uchar_t * const skey, const uchar_t ch) {
-	const uchar_t * const to = (mode == ENCRYPT_MODE) ? skey : __alpha_caesar;
-	uchar_t * const from = (mode == DECRYPT_MODE) ? skey : __alpha_caesar;
+static uint8_t __alpha[MAX_LENGTH] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static uint8_t __length_alpha = LEN_ALPHA;
+
+static uint8_t _char_encrypt (const int8_t mode, const int8_t nkey, uint8_t * const skey, const uint8_t ch) {
+	const uint8_t * const to = (mode == ENCRYPT_MODE) ? skey : __alpha;
+	uint8_t * const from = (mode == DECRYPT_MODE) ? skey : __alpha;
 	
-	for (uchar_t *p_from = from; *p_from != END_OF_STRING; ++p_from)
+	for (uint8_t *p_from = from; *p_from != END_OF_STRING; ++p_from)
 		if (*p_from == ch)
-			return to[(p_from - from - nkey + __length_alpha_caesar) % __length_alpha_caesar]; 
+			return to[(p_from - from - nkey + __length_alpha) % __length_alpha]; 
 
 	return ch;
 }
 
-static schar_t _check_caesar_wordkey (uchar_t * const skey) {
-	const uchar_t length = strlen(skey);
+static int8_t _check_wordkey (uint8_t * const skey) {
+	const uint8_t length = strlen(skey);
 
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	for (uchar_t *p_skey = skey; *p_skey != END_OF_STRING; ++p_skey) {
-		for (uchar_t i = p_skey - skey + 1; i < length; ++i)
+	for (uint8_t *p_skey = skey; *p_skey != END_OF_STRING; ++p_skey) {
+		for (uint8_t i = p_skey - skey + 1; i < length; ++i)
 			if (*p_skey == skey[i])
 				return 2;
 
 		bool flag = false;
-		for (uchar_t *p = __alpha_caesar; *p != END_OF_STRING; ++p)
+		for (uint8_t *p = __alpha; *p != END_OF_STRING; ++p)
 			if (*p_skey == *p) {
 				flag = true;
 				break;
@@ -43,17 +44,17 @@ static schar_t _check_caesar_wordkey (uchar_t * const skey) {
 	return 0;
 }
 
-static void _set_caesar_wordkey (uchar_t * const to, uchar_t * const from) {
+static void _set_wordkey (uint8_t * const to, uint8_t * const from) {
 	const size_t length = strlen(from);
 
-	uchar_t buffer[__length_alpha_caesar + 1];
+	uint8_t buffer[__length_alpha + 1];
 	strcpy(buffer, from);
 
-	uchar_t *p_buffer = &buffer[length];
+	uint8_t *p_buffer = &buffer[length];
 	
-	for (uchar_t *p = __alpha_caesar; *p != END_OF_STRING; ++p) {
+	for (uint8_t *p = __alpha; *p != END_OF_STRING; ++p) {
 		bool flag = false;
-		for (uchar_t *p_from = from; *p_from != END_OF_STRING; ++p_from) 
+		for (uint8_t *p_from = from; *p_from != END_OF_STRING; ++p_from) 
 			if (*p == *p_from) {
 				flag = true;
 				break;
@@ -68,39 +69,39 @@ static void _set_caesar_wordkey (uchar_t * const to, uchar_t * const from) {
 	strcpy(to, buffer);
 }
 
-extern char set_alpha_caesar_wordkey (const uchar_t * const alpha) {
+extern char set_alpha_caesar_wordkey (const uint8_t * const alpha) {
 	const size_t length = strlen(alpha);
 
 	if (length >= MAX_LENGTH)
 		return 1;
 
-	__length_alpha_caesar = (uchar_t)length;
+	__length_alpha = (uint8_t)length;
 
-	strcpy(__alpha_caesar, alpha);
+	strcpy(__alpha, alpha);
 
 	return 0;
 }
 
 extern char caesar_wordkey (
-	uchar_t * to, 
-	const schar_t mode, 
-	schar_t nkey, 
-	uchar_t * const skey,
-	const uchar_t * from
+	uint8_t * to, 
+	const int8_t mode, 
+	int8_t nkey, 
+	uint8_t * const skey,
+	const uint8_t * from
 ) {
 	if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE)
 		return 1;
 
-	if (_check_caesar_wordkey(skey))
+	if (_check_wordkey(skey))
 		return 2;
 
-	nkey = ( (nkey < 0) ? (__length_alpha_caesar + (nkey % __length_alpha_caesar)) : (nkey % __length_alpha_caesar) ) * mode;
+	nkey = ( (nkey < 0) ? (__length_alpha + (nkey % __length_alpha)) : (nkey % __length_alpha) ) * mode;
 
-	uchar_t buffer[__length_alpha_caesar + 1];
-	_set_caesar_wordkey(buffer, skey);
+	uint8_t buffer[__length_alpha + 1];
+	_set_wordkey(buffer, skey);
 
 	while (*from != END_OF_STRING)
-		*to++ = _char_caesar_wordkey(mode, nkey, buffer, *from++);
+		*to++ = _char_encrypt(mode, nkey, buffer, *from++);
 	
 	*to = END_OF_STRING;
 

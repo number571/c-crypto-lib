@@ -1,6 +1,8 @@
 #pragma once
 
-#include "append/types/integer.h"
+#include <stddef.h>
+
+#include "utils/types/integer.h"
 
 /*
 	M = "HELLO"
@@ -10,7 +12,7 @@
 			('E' = 69) ^ 3 = 70
 			('L' = 76) ^ 3 = 79
 			('O' = 79) ^ 3 = 76
-		C = 75 70 79 76
+		C = 75 70 79 79 76
 	D(C, K) =
 			75 ^ 3 = 72
 			70 ^ 3 = 69
@@ -20,7 +22,8 @@
 */
 
 extern char xor (
-	INTEGER_TYPE * to, 
-	const unsigned char key, 
-	const INTEGER_TYPE * from
+	__INTEGER__ * to, 
+	const __INTEGER__ key, 
+	const size_t length,
+	const __INTEGER__ * from
 );

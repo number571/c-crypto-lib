@@ -1,22 +1,15 @@
-#include "../append/macro/consts.h"
-#include "../append/types/char.h"
-#include "../append/types/integer.h"
+#include <stddef.h>
+
+#include "../utils/types/integer.h"
 
 extern char xor (
-	INTEGER_TYPE * to, 
-	const uchar_t key, 
-	const INTEGER_TYPE * from
+	__INTEGER__ * to, 
+	const __INTEGER__ key, 
+	const size_t length,
+	const __INTEGER__ * from
 ) {
-	for (; *from != END_OF_NUMBER; ++from) {
-		INTEGER_TYPE temp = *from ^ key;
-
-		if (!temp) 
-			*to++ = *from;
-		else 
-			*to++ = temp;
-	}
-
-	*to = END_OF_NUMBER;
+	for (size_t i = 0; i < length; ++i)
+		*to++ = from[i] ^ key;
 	
 	return 0;
 }

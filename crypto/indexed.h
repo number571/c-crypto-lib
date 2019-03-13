@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	M = "OHLEHELLO"
 	E(M) =
@@ -17,11 +19,11 @@
 		M = "OHLEHELLO"
 */
 
-extern void to_string_indexed (unsigned char * const to, const signed char * from);
-extern void to_bytes_indexed (signed char * to, const unsigned char * from);
+extern void to_string_indexed (uint8_t * const to, const int8_t * from);
+extern void to_bytes_indexed (int8_t * to, const uint8_t * from);
 extern char indexed (
-	signed char * to,
-	const signed char mode,
-	unsigned char * key,
-	const signed char * from
+	int8_t * to,
+	const int8_t mode,
+	uint8_t * key,
+	const int8_t * from
 );

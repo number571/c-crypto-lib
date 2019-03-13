@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z' (without 'J')
 	M = "HELLO"
@@ -43,11 +45,11 @@
 		M = "HELXLO"
 */
 
-extern void set_char_playfair (const unsigned char ch);
-extern char set_alpha_playfair (const unsigned char * const alpha);
+extern void set_char_playfair (const uint8_t ch);
+extern char set_alpha_playfair (const uint8_t * const alpha);
 extern char playfair (
-	unsigned char * to,
-	const signed char mode,
-	unsigned char * const key,
-	const unsigned char * const from
+	uint8_t * to,
+	const int8_t mode,
+	uint8_t * const key,
+	const uint8_t * const from
 );

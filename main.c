@@ -1,18 +1,16 @@
 #include <stdio.h>
 
-#include "crypto/append/macro/consts.h"
-#include "crypto/hill.h"
+#include "crypto/utils/macro/consts.h"
+#include "crypto/affine.h"
 
 int main(void) {
-    char message[100] = "HELLO, WORLD";
-    
-    set_alpha_hill("ABCDEFGHIJKLMNOPQRSTUVWXYZ,. ");
+	uint8_t message[100] = "HELLO";
 
-    hill(message, ENCRYPT_MODE, "QWERTYUIO", message);
-    printf("%s\n", message);
+	affine(message, ENCRYPT_MODE, 3, 4, message);
+	printf("%s\n", message);
 
-    hill(message, DECRYPT_MODE, "QWERTYUIO", message);
-    printf("%s\n", message);
+	affine(message, DECRYPT_MODE, 3, 4, message);
+	printf("%s\n", message);
 
     return 0;
 }

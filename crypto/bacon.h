@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z' 
 		(
@@ -21,14 +23,14 @@
 		M = "HELLO"
 */
 
-extern void set_char_bacon  (const unsigned char ch1, const unsigned char ch2);
-extern char set_alpha_bacon (const unsigned char * const alpha);
-extern void to_string_bacon (unsigned char * to, signed char * const from);
-extern void to_bytes_bacon  (signed char * to, const unsigned char * from);
-extern void print_bacon     (const signed char * from);
-extern void println_bacon   (const signed char * from);
+extern void set_char_bacon  (const uint8_t ch1, const uint8_t ch2);
+extern char set_alpha_bacon (const uint8_t * const alpha);
+extern void to_string_bacon (uint8_t * to, int8_t * const from);
+extern void to_bytes_bacon  (int8_t * to, const uint8_t * from);
+extern void print_bacon     (const int8_t * from);
+extern void println_bacon   (const int8_t * from);
 extern char bacon (
-	signed char * const to, 
-	const signed char mode, 
-	const signed char * const from
+	int8_t * const to, 
+	const int8_t mode, 
+	const int8_t * const from
 );

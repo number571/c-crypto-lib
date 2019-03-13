@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A[1] = "ACEGIKMOQSUWY"
 	A[2] = "BDFHJLNPRTVXZ"
@@ -21,8 +23,8 @@
 		M = "HELLO"
 */
 
-extern char set_alpha_couple (unsigned char * const alph1, unsigned char * const alph2);
+extern char set_alpha_couple (uint8_t * const alph1, uint8_t * const alph2);
 extern char couple (
-	unsigned char * to, 
-	const unsigned char * from
+	uint8_t * to, 
+	const uint8_t * from
 );

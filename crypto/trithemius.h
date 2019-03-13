@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 /*
 	A = 'A' .. 'Z'
 	M = "HELLO"
@@ -20,10 +22,10 @@
 		M = "HELLO"
 */
 
-extern char set_alpha_trithemius (const unsigned char * const alpha);
+extern char set_alpha_trithemius (const uint8_t * const alpha);
 extern char trithemius (
-	unsigned char * to, 
-	const signed char mode, 
-	signed char (* const key) (const signed char x), 
-	unsigned char * const from
+	uint8_t * to, 
+	const int8_t mode, 
+	int8_t (* const key) (const int8_t x), 
+	uint8_t * const from
 );
